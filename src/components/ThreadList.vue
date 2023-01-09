@@ -6,28 +6,28 @@
       <div v-for="thread in threads" :key="thread.id" class="thread">
         <div>
           <p>
-            <a href="thread.html">{{ thread.title }}</a>
+            <a href="#">{{ thread.title }}</a>
           </p>
           <p class="text-faded text-xsmall">
-            By <a href="#">{{ userById(thread.id).name }}</a
+            By <a href="#">{{ userById(thread.userId).name }}</a
             >, {{ thread.publishedAt }}.
           </p>
         </div>
 
         <div class="activity">
-          <p class="replies-count">
-            {{ thread.posts.length }}
-          </p>
+          <p class="replies-count">{{ thread.posts.length }} replies</p>
 
-          <img class="avatar-medium" src="userById(thread.id).avatar" alt="" />
+          <img
+            class="avatar-medium"
+            :src="userById(thread.userId).avatar"
+            alt=""
+          />
 
           <div>
             <p class="text-xsmall">
-              <a href="#">{{ userById(thread.id) }}</a>
+              <a href="#">{{ userById(thread.userId).name }}</a>
             </p>
-            <p class="text-xsmall text-faded">
-              {{ userById(thread.id).publishedAt }}
-            </p>
+            <p class="text-xsmall text-faded">{{ thread.publishedAt }}</p>
           </div>
         </div>
       </div>
@@ -37,11 +37,15 @@
 
 <script>
 import sourceData from "@/data.json";
-
 export default {
+  props: {
+    threads: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      threads: sourceData.threads,
       posts: sourceData.posts,
       users: sourceData.users,
     };
@@ -51,8 +55,10 @@ export default {
       return this.posts.find((p) => p.id === postId);
     },
     userById(userId) {
-      return this.users.find((u) => u.id === userId);
+      return this.users.find((p) => p.id === userId);
     },
   },
 };
 </script>
+
+<style scoped></style>
