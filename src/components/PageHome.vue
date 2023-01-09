@@ -1,31 +1,30 @@
 <template>
-    <div>Hello from page home</div>
-    <div 
-        v-for="thread of threads" :key="thread.id"> 
-        <h2>{{thread.title}}</h2>  
-        <div v-for="postId of thread.posts" :key="postId">
-            <p>{{posts.find(p => p.id === postId).text}}</p>
-        </div>
-    </div>
+  <h1>Welcome to the Forum</h1>
+  <ThreadList />
 </template>
 
 <script>
-import sourceData from "@/data.json"
+import sourceData from "@/data.json";
+import ThreadList from "./ThreadList.vue";
 
 export default {
-    data () {
-        return {
-            threads: sourceData.threads,
-            posts: sourceData.posts,
-            
-        }
-    }
-}
-
+  components: {
+    ThreadList,
+  },
+  data() {
+    return {
+      threads: sourceData.threads,
+      posts: sourceData.posts,
+      users: sourceData.users,
+    };
+  },
+  methods: {
+    postById(postId) {
+      return this.posts.find((p) => p.id === postId);
+    },
+    userById(userId) {
+      return this.users.find((u) => u.id === userId);
+    },
+  },
+};
 </script>
-
-
-<style scoped>
-
-
-</style>
